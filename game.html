@@ -233,7 +233,7 @@
          */
         function sendScoreToRanking(name, time, score) {
             // ★重要★ ここにメモしたGASのウェブアプリURLを貼り付ける
-            const GAS_URL = "https://script.google.com/macros/s/AKfycbzMtunzz_k6O2UO_PfA7fQJCzByL46JU6YMnOlDCXb60bzMPvGMB7pqdmcZzWprKykl/exec"; 
+            const GAS_URL = "https://script.google.com/macros/s/AKfycbztBY7TZfhLLI7rz-0kLMEJ18HHUgpzHjlqvc_CuNRti9KDZfVDUCnceKn48iRhYfKU/exec"; 
 
             const dataToSend = {
                 name: name,
@@ -267,7 +267,7 @@
          */
         function displayRanking() {
             // ★重要★ ここにメモしたGASのウェブアプリURLを貼り付ける
-            const GAS_URL = "https://script.google.com/macros/s/AKfycbzMtunzz_k6O2UO_PfA7fQJCzByL46JU6YMnOlDCXb60bzMPvGMB7pqdmcZzWprKykl/exec";
+            const GAS_URL = "https://script.google.com/macros/s/AKfycbztBY7TZfhLLI7rz-0kLMEJ18HHUgpzHjlqvc_CuNRti9KDZfVDUCnceKn48iRhYfKU/exec";
             const tableBody = document.querySelector('#ranking-table tbody');
             
             tableBody.innerHTML = '<tr><td colspan="4">ランキング読み込み中...</td></tr>';
@@ -299,4 +299,5 @@
 
     </script>
 </body>
+
 </html>
