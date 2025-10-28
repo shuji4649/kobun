@@ -1,33 +1,125 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <title>古文単語 タイムアタック ランキングバトル</title>
     <style>
-        body { font-family: sans-serif; text-align: center; background-color: #f0f8ff; margin: 0; padding: 20px 0; }
-        .container { max-width: 600px; margin: 0 auto; padding: 20px; background-color: white; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-        h1 { color: #005f73; }
-        
-        .hidden { display: none; }
+        body {
+            font-family: sans-serif;
+            text-align: center;
+            background-color: #f0f8ff;
+            margin: 0;
+            padding: 20px 0;
+        }
 
-        #question-word { font-size: 2.5em; font-weight: bold; margin: 20px 0; color: #005f73; }
-        .choices { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
-        .choice-btn { width: 100%; min-height: 80px; font-size: 1.1em; border: 2px solid #94d2bd; background-color: white; border-radius: 8px; cursor: pointer; transition: all 0.2s; }
-        .choice-btn:hover { background-color: #e9d8a6; }
-        .choice-btn.correct { background-color: #a7c957; color: white; border-color: #a7c957; }
-        .choice-btn.wrong { background-color: #f28482; color: white; border-color: #f28482; }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
 
-        #info { display: flex; justify-content: space-between; font-size: 1.5em; margin: 20px 0; }
-        #start-btn, #retry-btn { font-size: 1.5em; padding: 15px 30px; cursor: pointer; background-color: #0a9396; color: white; border: none; border-radius: 5px; margin-top: 20px;}
-        #result-text { font-size: 1.5em; margin-bottom: 30px;}
-        
+        h1 {
+            color: #005f73;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        #question-word {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin: 20px 0;
+            color: #005f73;
+        }
+
+        .choices {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .choice-btn {
+            width: 100%;
+            min-height: 80px;
+            font-size: 1.1em;
+            border: 2px solid #94d2bd;
+            background-color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .choice-btn:hover {
+            background-color: #e9d8a6;
+        }
+
+        .choice-btn.correct {
+            background-color: #a7c957;
+            color: white;
+            border-color: #a7c957;
+        }
+
+        .choice-btn.wrong {
+            background-color: #f28482;
+            color: white;
+            border-color: #f28482;
+        }
+
+        #info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.5em;
+            margin: 20px 0;
+        }
+
+        #start-btn,
+        #retry-btn {
+            font-size: 1.5em;
+            padding: 15px 30px;
+            cursor: pointer;
+            background-color: #0a9396;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        #result-text {
+            font-size: 1.5em;
+            margin-bottom: 30px;
+        }
+
         /* ランキングテーブルのスタイル */
-        #ranking-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
-        #ranking-table th, #ranking-table td { border: 1px solid #ccc; padding: 8px; text-align: left; }
-        #ranking-table th { background-color: #e9d8a6; color: #333; }
-        #ranking-table tr:nth-child(odd) { background-color: #f9f9f9; }
+        #ranking-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        #ranking-table th,
+        #ranking-table td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+
+        #ranking-table th {
+            background-color: #e9d8a6;
+            color: #333;
+        }
+
+        #ranking-table tr:nth-child(odd) {
+            background-color: #f9f9f9;
+        }
     </style>
 </head>
+
 <body>
 
     <div class="container">
@@ -54,25 +146,30 @@
         <div id="result-screen" class="hidden">
             <h1>結果発表</h1>
             <p id="result-text"></p>
-            
+
             <h2>ランキング</h2>
             <table id="ranking-table">
                 <thead>
-                    <tr><th>順位</th><th>名前</th><th>タイム</th><th>正解数</th></tr>
+                    <tr>
+                        <th>順位</th>
+                        <th>名前</th>
+                        <th>タイム</th>
+                        <th>正解数</th>
+                    </tr>
                 </thead>
                 <tbody>
-                    </tbody>
+                </tbody>
             </table>
-            
+
             <button id="retry-btn">もう一度挑戦する</button>
         </div>
     </div>
 
-    <script src="words.js"></script> 
-    
+    <script src="words.js"></script>
+
     <script>
         // --- 設定 ---
-        const TOTAL_QUESTIONS = 10; 
+        const TOTAL_QUESTIONS = 1;
 
         // --- HTML要素の取得 ---
         const startScreen = document.getElementById('start-screen');
@@ -87,8 +184,8 @@
         const resultTextEl = document.getElementById('result-text');
 
         // --- ゲームの状態を管理する変数 ---
-        let questions = []; 
-        let currentQIndex = 0; 
+        let questions = [];
+        let currentQIndex = 0;
         let score = 0;
         let timerInterval;
         let startTime;
@@ -115,12 +212,12 @@
          */
         function startGame() {
             if (kobunWords.length < 4) {
-                 alert("問題が少なすぎます。words.jsに最低4つ以上の単語を追加してください。");
-                 return;
+                alert("問題が少なすぎます。words.jsに最低4つ以上の単語を追加してください。");
+                return;
             }
             currentQIndex = 0;
             score = 0;
-            
+
             questions = shuffleArray([...kobunWords]).slice(0, TOTAL_QUESTIONS);
 
             startScreen.classList.add('hidden');
@@ -129,7 +226,7 @@
 
             startTime = Date.now();
             timerInterval = setInterval(updateTimer, 10);
-            
+
             showQuestion();
         }
 
@@ -148,15 +245,15 @@
             questionNumberEl.textContent = `第 ${currentQIndex + 1} 問`;
 
             const correctAnswer = q.answer;
-            
+
             // 1. 他の単語の答えを全て取得し、正解の答えを除く
             const allOtherAnswers = kobunWords
-                .map(item => item.answer) 
-                .filter(answer => answer !== correctAnswer); 
+                .map(item => item.answer)
+                .filter(answer => answer !== correctAnswer);
 
             // 2. 他の答えをシャッフルして、3つだけ取り出す
             const dummyChoices = shuffleArray(allOtherAnswers).slice(0, 3);
-            
+
             // 3. 正解とダミー選択肢を結合し、再度シャッフルして最終的な選択肢リストを作る
             const finalChoices = shuffleArray([correctAnswer, ...dummyChoices]);
 
@@ -206,7 +303,7 @@
             const elapsedTime = ((Date.now() - startTime) / 1000).toFixed(2);
 
             resultTextEl.innerHTML = `正解数: ${score} / ${TOTAL_QUESTIONS} 問<br>クリアタイム: ${elapsedTime} 秒`;
-            
+
             gameScreen.classList.add('hidden');
             resultScreen.classList.remove('hidden');
 
@@ -215,7 +312,7 @@
             if (playerName) {
                 sendScoreToRanking(playerName, elapsedTime, score);
             }
-            
+
             // ランキングを読み込んで表示
             displayRanking();
         }
@@ -233,7 +330,7 @@
          */
         function sendScoreToRanking(name, time, score) {
             // ★重要★ ここにメモしたGASのウェブアプリURLを貼り付ける
-            const GAS_URL = "https://script.google.com/macros/s/AKfycbztBY7TZfhLLI7rz-0kLMEJ18HHUgpzHjlqvc_CuNRti9KDZfVDUCnceKn48iRhYfKU/exec"; 
+            const GAS_URL = "https://script.google.com/macros/s/AKfycbztBY7TZfhLLI7rz-0kLMEJ18HHUgpzHjlqvc_CuNRti9KDZfVDUCnceKn48iRhYfKU/exec";
 
             const dataToSend = {
                 name: name,
@@ -241,27 +338,50 @@
                 score: score
             };
 
+            // 注意: クロスオリジンの制約により response が空になる場合があります。
+            // そのためまずはテキストで受け取り、空レスポンスや JSON パース失敗を許容して
+            // ランキング表示にフォールバックする実装にしています。
             fetch(GAS_URL, {
-                method: 'POST', 
+                method: 'POST',
+                mode: "no-cors",
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(dataToSend)
             })
-            .then(response => response.json())
-            .then(data => {
-                if (data.status === "success") {
-                    console.log("スコア登録成功！");
-                    displayRanking(); 
-                }
-            })
-            .catch(error => {
-                console.error("スコア登録エラー:", error);
-                // エラー時もランキング表示を試みる
-                displayRanking(); 
-            });
+                .then(response => response.text())
+                .then(text => {
+                    if (!text) {
+                        // 空レスポンス（no-cors の opaque など）の場合は成功とみなす
+                        console.log("スコア送信完了（応答未取得）");
+                        displayRanking();
+                        return;
+                    }
+
+                    let data;
+                    try {
+                        data = JSON.parse(text);
+                    } catch (e) {
+                        console.warn("レスポンスの JSON パースに失敗しました:", e);
+                        displayRanking();
+                        return;
+                    }
+
+                    if (data && data.status === "success") {
+                        console.log("スコア登録成功！");
+                        displayRanking();
+                    } else {
+                        console.warn("サーバからの応答が想定と異なります:", data);
+                        displayRanking();
+                    }
+                })
+                .catch(error => {
+                    console.error("スコア登録エラー:", error);
+                    // エラー時もランキング表示を試みる
+                    displayRanking();
+                });
         }
-        
+
         /**
          * ランキングを取得・表示する関数
          */
@@ -269,32 +389,32 @@
             // ★重要★ ここにメモしたGASのウェブアプリURLを貼り付ける
             const GAS_URL = "https://script.google.com/macros/s/AKfycbztBY7TZfhLLI7rz-0kLMEJ18HHUgpzHjlqvc_CuNRti9KDZfVDUCnceKn48iRhYfKU/exec";
             const tableBody = document.querySelector('#ranking-table tbody');
-            
+
             tableBody.innerHTML = '<tr><td colspan="4">ランキング読み込み中...</td></tr>';
 
             fetch(GAS_URL, {
-                method: 'GET' 
+                method: 'GET'
             })
-            .then(response => response.json())
-            .then(rankingData => {
-                tableBody.innerHTML = ''; 
+                .then(response => response.json())
+                .then(rankingData => {
+                    tableBody.innerHTML = '';
 
-                // 上位10件のみ表示
-                rankingData.slice(0, 10).forEach((row, index) => {
-                    const tr = document.createElement('tr');
-                    tr.innerHTML = `
+                    // 上位10件のみ表示
+                    rankingData.slice(0, 10).forEach((row, index) => {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
                         <td>${index + 1}</td>
                         <td>${row[0]}</td>
                         <td>${row[1]}秒</td>
                         <td>${row[2]}問</td>
                     `;
-                    tableBody.appendChild(tr);
+                        tableBody.appendChild(tr);
+                    });
+                })
+                .catch(error => {
+                    tableBody.innerHTML = '<tr><td colspan="4">ランキングの取得に失敗しました。GASのURLが正しいか確認してください。</td></tr>';
+                    console.error("ランキング取得エラー:", error);
                 });
-            })
-            .catch(error => {
-                tableBody.innerHTML = '<tr><td colspan="4">ランキングの取得に失敗しました。GASのURLが正しいか確認してください。</td></tr>';
-                console.error("ランキング取得エラー:", error);
-            });
         }
 
     </script>
